@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youness AABIL — Portfolio</title>
+  <meta name="description" content="Portfolio de Youness AABIL, élève-ingénieur EEEA à l'ENSEEIHT (Toulouse INP) : parcours, projets, compétences et distinctions."
+        data-en-content="Portfolio of Youness AABIL, EEEA engineering student at ENSEEIHT (Toulouse INP): background, projects, skills and honors.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!--
+    ======================================================================
+    SYSTÈME BILINGUE (FR par défaut / EN)
+    - Le texte français est écrit directement dans le HTML.
+    - Pour chaque élément traduisible, l'anglais est dans l'attribut data-en.
+      Le français d'origine est mémorisé automatiquement par le JavaScript
+      (attribut data-fr créé au chargement).
+    - Attributs spéciaux : data-en-alt (images), data-en-title (iframe),
+      data-en-content (balise meta).
+    - Les fichiers CV (PDF) se règlent dans la section VARIABLES du script.
+    ======================================================================
+  -->
+
+  <style>
+    /* =====================================================================
+       1. VARIABLES — PARAMÈTRES MODIFIABLES (couleurs, polices, espacements)
+       ===================================================================== */
+    :root {
+      /* Couleurs */
+      --color-primary:        #4f46e5;   /* accent principal (indigo) */
+      --color-primary-dark:   #3730a3;
+      --color-secondary:      #06b6d4;   /* accent secondaire (cyan) */
+      --color-bg:             #f8fafc;   /* fond de page */
+      --color-surface:        #ffffff;   /* fond des cartes */
+      --color-surface-alt:    #eef2ff;   /* fond des sections alternées */
+      --color-text:           #1e293b;
+      --color-text-muted:     #64748b;
+      --color-border:         #e2e8f0;
+      --color-footer-bg:      #0f172a;
+      --color-footer-text:    #cbd5e1;
+
+      /* Typographie */
+      --font-body:            'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-heading:         'Poppins', 'Inter', sans-serif;
+
+      /* Mise en page */
+      --container-width:      1100px;
+      --header-height:        70px;
+      --section-padding:      96px;
+      --radius:               16px;
+      --shadow-sm:            0 2px 8px rgba(15, 23, 42, .06);
+      --shadow-md:            0 12px 32px rgba(15, 23, 42, .10);
+      --transition:           .3s ease;
+    }
+
+    /* =====================================================================
+       2. RESET & BASE
+       ===================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a   { color: inherit; text-decoration: none; }
+    ul  { list-style: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section { padding: var(--section-padding) 0; }
+    section:nth-of-type(even) { background: var(--color-surface-alt); }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 64px; height: 4px;
+      margin: 14px auto 0;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--color-text-muted);
+      max-width: 620px;
+      margin: 0 auto 56px;
+    }
+
+    /* Boutons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      box-shadow: 0 8px 24px rgba(79, 70, 229, .35);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(79, 70, 229, .45); }
+    .btn-outline {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: transparent;
+    }
+    .btn-outline:hover { background: var(--color-primary); color: #fff; }
+
+    /* Badges (mots-clés, soft skills) */
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--color-primary-dark);
+      background: var(--color-surface-alt);
+      border: 1px solid rgba(79, 70, 229, .18);
+    }
+
+    /* =====================================================================
+       3. HEADER / NAVIGATION (fixe)
+       ===================================================================== */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      z-index: 1000;
+      background: rgba(255, 255, 255, .85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .site-header .container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--color-primary);
+    }
+    .logo span { color: var(--color-secondary); }
+
+    .nav-links { display: flex; gap: 28px; margin-left: auto; }
+    .nav-links a {
+      font-weight: 500;
+      font-size: .95rem;
+      color: var(--color-text-muted);
+      position: relative;
+      padding: 6px 0;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute; left: 0; bottom: 0;
+      width: 0; height: 2px;
+      background: var(--color-primary);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--color-primary); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Bouton de changement de langue FR | EN */
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 28px;
+      padding: 3px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      cursor: pointer;
+      font-family: var(--font-body);
+      box-shadow: var(--shadow-sm);
+    }
+    .lang-toggle:focus-visible { outline: 3px solid var(--color-secondary); outline-offset: 2px; }
+    .lang-opt {
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--color-text-muted);
+      transition: var(--transition);
+    }
+    .lang-opt.is-active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    }
+
+    /* Menu burger (mobile) — sans JavaScript, via une case à cocher */
+    .nav-toggle { display: none; }
+    .nav-burger {
+      display: none;
+      cursor: pointer;
+      width: 28px; height: 20px;
+      position: relative;
+    }
+    .nav-burger span,
+    .nav-burger::before,
+    .nav-burger::after {
+      content: "";
+      position: absolute; left: 0;
+      width: 100%; height: 3px;
+      background: var(--color-text);
+      border-radius: 3px;
+      transition: var(--transition);
+    }
+    .nav-burger::before { top: 0; }
+    .nav-burger span    { top: 8.5px; }
+    .nav-burger::after  { bottom: 0; }
+
+    /* =====================================================================
+       4. SECTION À PROPOS
+       ===================================================================== */
+    #about {
+      padding-top: calc(var(--header-height) + 64px);
+      background:
+        radial-gradient(circle at 85% 10%, rgba(6, 182, 212, .14), transparent 45%),
+        radial-gradient(circle at 10% 90%, rgba(79, 70, 229, .12), transparent 45%),
+        var(--color-bg) !important;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-photo { position: relative; justify-self: center; }
+    .about-photo img {
+      width: 300px; height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid var(--color-surface);
+      box-shadow: var(--shadow-md);
+      position: relative; z-index: 1;
+    }
+    .about-photo::before {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      opacity: .35;
+      filter: blur(2px);
+    }
+    .about-greeting {
+      color: var(--color-primary);
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .9rem;
+    }
+    .about-name {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.15;
+      margin: 8px 0;
+    }
+    .about-role {
+      font-size: 1.15rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+    }
+    .about-bio { color: var(--color-text-muted); margin-bottom: 28px; max-width: 60ch; }
+    .about-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px 24px;
+      margin-bottom: 32px;
+    }
+    .about-info li { font-size: .95rem; }
+    .about-info strong { display: block; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--color-text-muted); }
+    .about-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+
+    /* =====================================================================
+       4 bis. SECTION ELEVATOR PITCH (vidéo YouTube responsive 16/9)
+       ===================================================================== */
+    .video-wrapper {
+      width: 100%;
+      max-width: 800px;                 /* largeur maximale du lecteur */
+      margin: 0 auto;
+    }
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;             /* conteneur responsive 16/9 */
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--color-footer-bg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border);
+    }
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .video-cta { text-align: center; margin-top: 32px; }
+
+    /* =====================================================================
+       5. SECTION CV — TIMELINE
+       ===================================================================== */
+    .timeline-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .timeline-col h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      margin-bottom: 28px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+      border-left: 3px solid var(--color-border);
+    }
+    .timeline-item { position: relative; margin-bottom: 32px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -41px; top: 6px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--color-surface);
+      border: 4px solid var(--color-primary);
+      transition: var(--transition);
+    }
+    .timeline-item:hover::before { background: var(--color-primary); transform: scale(1.2); }
+    .timeline-card {
+      background: var(--color-surface);
+      padding: 22px 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+      transition: var(--transition);
+    }
+    .timeline-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .timeline-date {
+      display: inline-block;
+      font-size: .8rem; font-weight: 600;
+      color: var(--color-primary);
+      background: var(--color-surface-alt);
+      padding: 3px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .timeline-card h4 { font-size: 1.05rem; line-height: 1.4; }
+    .timeline-place { color: var(--color-text-muted); font-size: .9rem; margin-bottom: 8px; }
+    .timeline-card p:last-child { font-size: .93rem; color: var(--color-text-muted); }
+    .timeline-list { font-size: .93rem; color: var(--color-text-muted); }
+    .timeline-list li { position: relative; padding-left: 18px; margin-bottom: 6px; }
+    .timeline-list li::before {
+      content: "";
+      position: absolute; left: 0; top: .7em;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--color-secondary);
+    }
+    .timeline-list strong { color: var(--color-text); }
+    .cv-cta { text-align: center; margin-top: 56px; }
+
+    /* =====================================================================
+       6. SECTION MES PROJETS
+       ===================================================================== */
+    .project-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .project-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .project-banner {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+      padding: 32px 36px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    }
+    .project-icon {
+      width: 64px; height: 64px;
+      display: grid; place-items: center;
+      font-size: 2rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .2);
+    }
+    .project-banner-text { flex: 1; min-width: 240px; }
+    .project-type {
+      font-size: .78rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .1em;
+      opacity: .85;
+    }
+    .project-banner h3 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+      line-height: 1.35;
+    }
+    .project-role {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: .85rem; font-weight: 600;
+      background: rgba(255, 255, 255, .22);
+      border: 1px solid rgba(255, 255, 255, .35);
+    }
+    .project-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 36px;
+    }
+    .project-body h4 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      margin-bottom: 14px;
+      color: var(--color-primary);
+    }
+    .project-body p { color: var(--color-text-muted); font-size: .95rem; }
+    .project-footer {
+      padding: 24px 36px 32px;
+      border-top: 1px solid var(--color-border);
+    }
+    .project-footer h4 { font-family: var(--font-heading); font-size: 1rem; margin-bottom: 14px; color: var(--color-primary); }
+
+    /* =====================================================================
+       7. SECTION COMPÉTENCES
+       ===================================================================== */
+    .skills-group-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      margin: 0 0 24px;
+    }
+    .skills-group + .skills-group { margin-top: 56px; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .skill-card {
+      background: var(--color-surface);
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .skill-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .skill-card .skill-icon { font-size: 2rem; margin-bottom: 8px; }
+    .skill-card h4 { margin-bottom: 6px; font-size: 1.02rem; line-height: 1.4; }
+    .skill-card p { font-size: .9rem; color: var(--color-text-muted); }
+    .skill-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-weight: 600; }
+    .skill-head .skill-level { color: var(--color-primary); font-size: .9rem; text-align: right; }
+
+    /* =====================================================================
+       8. SECTION ACCOMPLISSEMENTS
+       ===================================================================== */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 460px));
+      justify-content: center;
+      gap: 28px;
+    }
+    .achievement-card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .achievement-card::before {
+      content: "";
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    }
+    .achievement-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+    .achievement-icon {
+      width: 52px; height: 52px;
+      display: grid; place-items: center;
+      font-size: 1.6rem;
+      border-radius: 14px;
+      background: var(--color-surface-alt);
+      margin-bottom: 16px;
+    }
+    .achievement-tag {
+      font-size: .75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--color-secondary);
+    }
+    .achievement-card h3 { font-size: 1.1rem; margin: 4px 0 8px; line-height: 1.4; }
+    .achievement-card p { font-size: .93rem; color: var(--color-text-muted); }
+    .achievement-meta { margin-top: 14px; font-size: .85rem; color: var(--color-text-muted); }
+
+    /* =====================================================================
+       9. FOOTER
+       ===================================================================== */
+    .site-footer {
+      background: var(--color-footer-bg);
+      color: var(--color-footer-text);
+      padding: 64px 0 28px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .site-footer h3 { color: #fff; font-family: var(--font-heading); margin-bottom: 16px; font-size: 1.1rem; }
+    .site-footer li { margin-bottom: 8px; font-size: .95rem; }
+    .site-footer a:hover { color: var(--color-secondary); }
+    .social-links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .social-links a {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      font-size: .9rem; font-weight: 500;
+      transition: var(--transition);
+    }
+    .social-links a:hover { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, .1);
+      font-size: .85rem;
+      color: #94a3b8;
+    }
+
+    /* =====================================================================
+       10. RESPONSIVE
+       ===================================================================== */
+    @media (max-width: 960px) {
+      .about-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .about-bio { margin-inline: auto; }
+      .about-actions { justify-content: center; }
+      .timeline-wrapper { grid-template-columns: 1fr; }
+      .project-body { grid-template-columns: 1fr; gap: 28px; }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .social-links { justify-content: center; }
+    }
+
+    @media (max-width: 760px) {
+      :root { --section-padding: 72px; }
+
+      /* Barre mobile : logo à gauche, bouton de langue puis burger à droite */
+      .lang-toggle { order: 1; margin-left: auto; margin-right: 18px; }
+      .nav-burger  { display: block; order: 2; }
+
+      .nav-links {
+        position: absolute;
+        top: var(--header-height); left: 0; right: 0;
+        flex-direction: column;
+        gap: 0;
+        margin-left: 0;
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .35s ease;
+      }
+      .nav-links a { display: block; padding: 16px 24px; border-top: 1px solid var(--color-border); }
+      .nav-links a::after { display: none; }
+      .nav-toggle:checked ~ .nav-links { max-height: 500px; }
+      .nav-toggle:checked ~ .nav-burger span { opacity: 0; }
+      .nav-toggle:checked ~ .nav-burger::before { top: 8.5px; transform: rotate(45deg); }
+      .nav-toggle:checked ~ .nav-burger::after  { bottom: 8.5px; transform: rotate(-45deg); }
+
+      .about-photo img { width: 230px; height: 230px; }
+      .project-banner, .project-body, .project-footer { padding-left: 22px; padding-right: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =====================================================================
+       HEADER — Navigation fixe avec liens ancres + bouton de langue
+       ===================================================================== -->
+  <header class="site-header">
+    <nav class="container" aria-label="Navigation principale">
+      <a href="#about" class="logo">YA<span>.</span></a>
+
+      <!-- Case à cocher : pilote le menu mobile sans JavaScript -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Ouvrir le menu">
+      <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span></label>
+
+      <ul class="nav-links">
+        <li><a href="#about" data-en="About">À propos</a></li>
+        <li><a href="#pitch" data-en="Video">Présentation</a></li>
+        <li><a href="#resume" data-en="Resume">CV</a></li>
+        <li><a href="#projets" data-en="Projects">Projets</a></li>
+        <li><a href="#skills" data-en="Skills">Compétences</a></li>
+        <li><a href="#achievements" data-en="Honors">Distinctions</a></li>
+        <li><a href="#contact" data-en="Contact">Contact</a></li>
+      </ul>
+
+      <!-- Bouton de changement de langue : la langue active est mise en évidence -->
+      <button type="button" id="lang-toggle" class="lang-toggle" aria-label="Switch to English">
+        <span class="lang-opt is-active" data-lang-opt="fr">FR</span>
+        <span class="lang-opt" data-lang-opt="en">EN</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- =====================================================================
+         SECTION 1 — À PROPOS
+         ===================================================================== -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="container about-grid">
+
+        <!-- Photo de profil : fichier à placer dans le même dossier que ce fichier HTML -->
+        <figure class="about-photo">
+          <img src="youness-photo.jpg" alt="Photo de profil de Youness AABIL" data-en-alt="Profile photo of Youness AABIL" width="300" height="300">
+        </figure>
+
+        <div class="about-text">
+          <p class="about-greeting" data-en="Hello, I'm">Bonjour, je suis</p>
+          <h1 class="about-name" id="about-title">Youness AABIL</h1>
+          <p class="about-role" data-en="Engineering Student in Electrical, Electronic &amp; Control Engineering (EEEA)">Élève-Ingénieur en Électronique, Énergie Électrique &amp; Automatique (EEEA)</p>
+
+          <!-- Biographie -->
+          <p class="about-bio" data-en="First-year engineering student at ENSEEIHT (Toulouse INP), following an intensive two-year STEM foundation program (CPGE MPSI/MP). Rigorous, analytical, and highly adaptable, I am deeply committed to my academic and practical engineering training. My hands-on field experience has developed my autonomy, operational problem-solving, and teamwork capabilities—key assets for managing complex engineering projects.">Élève-ingénieur en première année à l'ENSEEIHT (Toulouse INP), issu des classes préparatoires aux grandes écoles (MPSI/MP). Rationnel, rigoureux et doté d'une forte capacité d'adaptation, je m'investis pleinement dans ma formation technique et scientifique. Mes expériences de terrain m'ont appris l'autonomie, la gestion des contraintes et le travail en équipe opérationnelle, des atouts majeurs pour mener à bien des projets d'ingénierie complexes.</p>
+
+          <ul class="about-info">
+            <li><strong data-en="Location">Localisation</strong>Toulouse, France</li>
+            <li><strong>Email</strong><a href="mailto:youness.aabil@gmail.com">youness.aabil@gmail.com</a></li>
+            <li><strong data-en="Institution">École</strong>ENSEEIHT — Toulouse INP</li>
+            <li><strong data-en="Driver's License">Permis</strong><span data-en="Full Driver's License (Permis B)">Permis B</span></li>
+            <li><strong data-en="Interests">Centres d'intérêt</strong><span data-en="Music, scientific literature, technology news, and engineering innovations">Musique, lecture scientifique et littérature, actualités technologiques et ingénierie</span></li>
+          </ul>
+
+          <div class="about-actions">
+            <a href="#resume" class="btn btn-primary" data-en="View my background">Voir mon parcours</a>
+            <a href="#contact" class="btn btn-outline" data-en="Contact me">Me contacter</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 1 bis — PRÉSENTATION / ELEVATOR PITCH (vidéo YouTube)
+         Remplace VOTRE_ID_YOUTUBE (2 occurrences) par l'identifiant de ta vidéo.
+         ===================================================================== -->
+    <section id="pitch" aria-labelledby="pitch-title">
+      <div class="container">
+        <h2 class="section-title" id="pitch-title" data-en="My Elevator Pitch">Mon Elevator Pitch</h2>
+        <p class="section-subtitle" data-en="Discover my background and ambitions in 2 minutes through video.">Découvrez mon parcours et mes ambitions en 2 minutes en vidéo.</p>
+
+        <div class="video-wrapper">
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/VOTRE_ID_YOUTUBE"
+              title="Elevator Pitch de Youness AABIL"
+              data-en-title="Youness AABIL's Elevator Pitch"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen></iframe>
+          </div>
+
+          <div class="video-cta">
+            <a href="https://www.youtube.com/watch?v=VOTRE_ID_YOUTUBE" class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-en="▶ Watch on YouTube">▶ Visionner sur YouTube</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 2 — CV (Timeline + bouton de téléchargement)
+         ===================================================================== -->
+    <section id="resume" aria-labelledby="resume-title">
+      <div class="container">
+        <h2 class="section-title" id="resume-title" data-en="My Background">Mon Parcours</h2>
+        <p class="section-subtitle" data-en="My academic background and hands-on field experience.">Mon parcours académique et mes expériences de terrain.</p>
+
+        <div class="timeline-wrapper">
+
+          <!-- Parcours académique -->
+          <div class="timeline-col">
+            <h3 data-en="🎓 Academic background">🎓 Parcours académique</h3>
+            <div class="timeline">
+
+              <article class="timeline-item">
+                <div class="timeline-card">
+                  <span class="timeline-date" data-en="2026 – Present">2026 – Présent</span>
+                  <h4 data-en="Master's Degree in Engineering — Electrical, Electronic &amp; Control Engineering (EEEA)">Cycle Ingénieur — Électronique, Énergie Électrique, Automatique (EEEA)</h4>
+                  <p class="timeline-place">ENSEEIHT, Toulouse INP</p>
+                  <p data-en="Comprehensive engineering program focusing on electrical engineering, automated systems, signal processing, and electronics.">Formation approfondie en ingénierie électrique, systèmes automatisés, traitement du signal et électronique.</p>
+                </div>
+              </article>
+
+              <article class="timeline-item">
+                <div class="timeline-card">
+                  <span class="timeline-date">2024 – 2026</span>
+                  <h4 data-en="Intensive Two-Year STEM Foundation Program (CPGE MPSI/MP)">Classes Préparatoires aux Grandes Écoles (CPGE) — MPSI / MP</h4>
+                  <p class="timeline-place" data-en="Mohamed Réda Slaoui Prep College, Agadir (Morocco)">Centre Mohamed Réda Slaoui, Agadir (Maroc)</p>
+                  <p data-en="Rigorous higher-education program emphasizing Mathematics, Physics, Chemistry, and Engineering Sciences.">Formation académique exigeante centrée sur les Mathématiques, la Physique, la Chimie et les Sciences de l'Ingénieur.</p>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Expériences professionnelles & terrain -->
+          <div class="timeline-col">
+            <h3 data-en="💼 Field &amp; work experience">💼 Expériences professionnelles &amp; terrain</h3>
+            <div class="timeline">
+
+              <article class="timeline-item">
+                <div class="timeline-card">
+                  <span class="timeline-date" data-en="June – August 2024">Juin – Août 2024</span>
+                  <h4 data-en="Versatile Assistant &amp; Maintenance Technician">Employé Polyvalent &amp; Agent de Maintenance</h4>
+                  <p class="timeline-place" data-en="Local Retailer, Ouled Teima (Morocco)">Magasin local, Ouled Teima (Maroc)</p>
+                  <ul class="timeline-list">
+                    <li><strong data-en="Maintenance &amp; equipment handling:">Petite maintenance &amp; équipements :</strong> <span data-en="inspection, routine maintenance, and repair of store equipment to ensure operational continuity.">vérification, entretien et réparation du matériel du magasin, garantissant le bon fonctionnement opérationnel.</span></li>
+                    <li><strong data-en="Operations &amp; logistics:">Organisation &amp; logistique :</strong> <span data-en="POS management, stock control, and retail floor layout optimization.">gestion de la caisse, des stocks, aménagement et optimisation de l'espace de vente.</span></li>
+                    <li><strong data-en="Customer relations:">Relation client :</strong> <span data-en="customer onboarding, support, and query resolution with professionalism and accuracy.">accueil, conseil et orientation des clients avec professionnalisme et rigueur.</span></li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="timeline-item">
+                <div class="timeline-card">
+                  <span class="timeline-date" data-en="August 2023">Août 2023</span>
+                  <h4 data-en="Construction Site Assistant / General Laborer">Aide-Chantier / Ouvrier du BTP</h4>
+                  <p class="timeline-place" data-en="Civil Engineering &amp; Construction (BTP)">Secteur du Bâtiment et des Travaux Publics</p>
+                  <ul class="timeline-list">
+                    <li><strong data-en="Safety &amp; compliance:">Sécurité &amp; conformité :</strong> <span data-en="strict adherence to site safety protocols and systematic use of Personal Protective Equipment (PPE).">application rigoureuse des consignes de sécurité et port systématique des Équipements de Protection Individuelle (EPI).</span></li>
+                    <li><strong data-en="Teamwork:">Travail d'équipe :</strong> <span data-en="integration into an operational site crew, supporting daily structural tasks.">intégration au sein d'une équipe opérationnelle et soutien actif aux tâches quotidiennes du bâtiment.</span></li>
+                    <li><strong data-en="Constraints &amp; time management:">Gestion des contraintes :</strong> <span data-en="direct exposure to material constraints, tight schedules, and physical stamina requirements.">sensibilisation directe aux exigences matérielles, au respect des délais de calendrier et à la résistance à l'effort.</span></li>
+                  </ul>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action : téléchargement du CV (PDF).
+             Le fichier change selon la langue (voir CV_FILES dans le script). -->
+        <div class="cv-cta">
+          <a href="CV_Youness_Aabil_Ingenieur_v3.pdf" class="btn btn-primary" id="cv-download" download="CV_Youness_Aabil_Ingenieur_v3.pdf" data-en="⬇ Download my Resume (PDF)">⬇ Télécharger mon CV (PDF)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 3 — MES PROJETS
+         ===================================================================== -->
+    <section id="projets" aria-labelledby="projets-title">
+      <div class="container">
+        <h2 class="section-title" id="projets-title" data-en="My Projects">Mes Projets</h2>
+        <p class="section-subtitle" data-en="A design and experimentation project completed during my preparatory program.">Un projet de conception et d'expérimentation mené en classes préparatoires.</p>
+
+        <!-- Carte projet : TIPE -->
+        <article class="project-card">
+
+          <div class="project-banner">
+            <div class="project-icon" aria-hidden="true">💧</div>
+            <div class="project-banner-text">
+              <p class="project-type" data-en="Capstone Project (TIPE) — Supervised Personal Initiative Project (CPGE Capstone)">Projet TIPE — Travail d'Initiative Personnelle Encadré (CPGE)</p>
+              <h3 data-en="Experimental Study and Modeling of a Hydraulic Ram Pump">Étude Expérimentale et Modélisation d'une Pompe à Coup de Bélier</h3>
+            </div>
+            <span class="project-role" data-en="Lead Designer &amp; Experimentalist">Concepteur &amp; Expérimentateur principal</span>
+          </div>
+
+          <div class="project-body">
+            <div>
+              <h4 data-en="Description">Description</h4>
+              <p data-en="Design, construction, and experimental characterization of a self-powered hydraulic pumping system using water hammer transient pressure surges to elevate water without external electrical energy.">Conception, fabrication et caractérisation expérimentale d'un système de pompage hydraulique autonome exploitant le phénomène de surpression transitoire (coup de bélier) pour élever de l'eau sans apport d'énergie électrique extérieure.</p>
+            </div>
+            <div>
+              <h4 data-en="Methodology &amp; key accomplishments">Méthodologie &amp; réalisations</h4>
+              <ul class="timeline-list">
+                <li data-en="Theoretical modeling of transient flow equations and pumping efficiency.">Modélisation théorique des équations d'écoulement transitoire et du rendement de pompage.</li>
+                <li data-en="Sizing, assembly, and testing of a hydraulic test rig (foot valve, check valve, pressure vessel).">Dimensionnement et assemblage d'un banc d'essai hydraulique (clapet de crépine, clapet anti-retour, réservoir d'air).</li>
+                <li data-en="Data acquisition regarding flow rates, water pressure, and overall system efficiency evaluation.">Acquisition de données sur les débits, la pression d'eau et calcul du rendement global.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="project-footer">
+            <h4 data-en="Keywords &amp; technical focus">Mots-clés &amp; technologies</h4>
+            <div class="badges">
+              <span class="badge" data-en="Fluid Mechanics">Mécanique des fluides</span>
+              <span class="badge" data-en="Transient Hydraulics">Hydraulique transitoire</span>
+              <span class="badge" data-en="Physical Modeling">Modélisation physique</span>
+              <span class="badge" data-en="Experimental Test Bench">Banc d'essai</span>
+              <span class="badge" data-en="Efficiency Analysis">Analyse de rendement</span>
+            </div>
+          </div>
+
+        </article>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 4 — COMPÉTENCES
+         ===================================================================== -->
+    <section id="skills" aria-labelledby="skills-title">
+      <div class="container">
+        <h2 class="section-title" id="skills-title" data-en="Skills">Compétences</h2>
+        <p class="section-subtitle" data-en="My technical skills, soft skills and languages.">Mes compétences techniques, mes qualités humaines et mes langues.</p>
+
+        <!-- Compétences techniques & ingénierie -->
+        <div class="skills-group">
+          <h3 class="skills-group-title" data-en="⚙️ Technical &amp; engineering skills">⚙️ Compétences techniques &amp; ingénierie</h3>
+          <div class="skills-grid">
+
+            <div class="skill-card">
+              <div class="skill-icon" aria-hidden="true">🔌</div>
+              <h4 data-en="Analog &amp; Digital Electronics">Électronique analogique &amp; numérique</h4>
+              <p data-en="Component characterization, circuit analysis, and fundamental electrical laws application.">Caractérisation de composants, analyse de circuits et application des lois fondamentales de l'électricité.</p>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-icon" aria-hidden="true">📈</div>
+              <h4 data-en="Stochastic Modeling &amp; Probabilistic Analysis">Modélisation stochastique &amp; analyse probabiliste</h4>
+              <p data-en="Applications to physical systems, signal processing, and quantitative data analysis.">Application aux systèmes physiques, au traitement du signal et à l'analyse de données.</p>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-icon" aria-hidden="true">🌊</div>
+              <h4 data-en="Engineering Sciences &amp; Applied Physics">Sciences de l'ingénieur &amp; physique appliquée</h4>
+              <p data-en="Fluid mechanics, transient dynamics, physical modeling, and experimental testing.">Mécanique des fluides, hydraulique transitoire, modélisation théorique et expérimentation sur banc d'essai.</p>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-icon" aria-hidden="true">🛠️</div>
+              <h4 data-en="Software &amp; Operations">Outils &amp; logistique</h4>
+              <p data-en="MS Office Suite (Word, Excel, PowerPoint), scientific computation tools, equipment maintenance, inventory management.">Pack Office (Word, Excel, PowerPoint), outils de calcul scientifique, petite maintenance matérielle, gestion de stocks.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Compétences humaines (soft skills) -->
+        <div class="skills-group">
+          <h3 class="skills-group-title" data-en="🤝 Soft skills">🤝 Compétences humaines</h3>
+          <div class="badges">
+            <span class="badge" data-en="Professional rigor">Rigueur</span>
+            <span class="badge" data-en="Organizational skills">Organisation</span>
+            <span class="badge" data-en="Adaptability">Capacité d'adaptation</span>
+            <span class="badge" data-en="Operational teamwork">Esprit d'équipe</span>
+            <span class="badge" data-en="Working under constraint">Gestion des contraintes de terrain</span>
+            <span class="badge" data-en="Site safety awareness">Respect strict des consignes de sécurité</span>
+          </div>
+        </div>
+
+        <!-- Langues -->
+        <div class="skills-group">
+          <h3 class="skills-group-title" data-en="🌍 Languages">🌍 Langues</h3>
+          <div class="skills-grid">
+
+            <div class="skill-card">
+              <div class="skill-head"><span data-en="French">Français</span><span class="skill-level" data-en="Fluent / Language of instruction">Courant / langue d'enseignement</span></div>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-head"><span data-en="English">Anglais</span><span class="skill-level" data-en="Professional Working Proficiency / Technical">Opérationnel / technique</span></div>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-head"><span data-en="Arabic">Arabe</span><span class="skill-level" data-en="Native Language">Langue maternelle</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 5 — DISTINCTIONS & PRIX
+         ===================================================================== -->
+    <section id="achievements" aria-labelledby="achievements-title">
+      <div class="container">
+        <h2 class="section-title" id="achievements-title" data-en="Honors &amp; Awards">Distinctions &amp; Prix</h2>
+        <p class="section-subtitle" data-en="Achievements that reflect my scientific background.">Les réussites qui reflètent mon parcours scientifique.</p>
+
+        <div class="achievements-grid">
+
+          <article class="achievement-card">
+            <div class="achievement-icon">🏆</div>
+            <span class="achievement-tag" data-en="Honor">Distinction</span>
+            <h3 data-en="Finalist, Moroccan National Physics Olympiad">Finaliste des Olympiades Marocaines de Physique</h3>
+            <p data-en="Selected among the top national scientific students, reflecting advanced problem-solving skills in theoretical and applied physics.">Sélection parmi les meilleurs élèves scientifiques du pays, témoignant d'une excellente maîtrise des concepts physiques et analytiques.</p>
+            <p class="achievement-meta" data-en="2024 Edition">Édition 2024</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       FOOTER — Contact & réseaux sociaux
+       ===================================================================== -->
+  <footer class="site-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div>
+          <h3>Youness AABIL</h3>
+          <p data-en="EEEA engineering student at ENSEEIHT (Toulouse INP), open to internship and collaboration opportunities.">Élève-ingénieur EEEA à l'ENSEEIHT (Toulouse INP), ouvert aux opportunités de stage et de collaboration.</p>
+        </div>
+
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li>✉️ <a href="mailto:youness.aabil@gmail.com">youness.aabil@gmail.com</a></li>
+            <li>📞 <a href="tel:+33758728621">+33 7 58 72 86 21</a></li>
+            <li>📍 Toulouse, France</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 data-en="Networks">Réseaux</h3>
+          <div class="social-links">
+            <a href="mailto:youness.aabil@gmail.com">Email</a>
+            <!-- Ajoute tes liens quand ils seront disponibles (décommente et remplace l'URL) :
+            <a href="https://www.linkedin.com/in/TON-PROFIL" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/TON-PROFIL" target="_blank" rel="noopener noreferrer">GitHub</a>
+            -->
+          </div>
+        </div>
+
+      </div>
+
+      <p class="footer-bottom">© <span id="year">2026</span> Youness AABIL — <span data-en="All rights reserved.">Tous droits réservés.</span></p>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       JAVASCRIPT — Changement de langue FR ⇄ EN + choix du CV PDF
+       ===================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ------------------------------------------------------------------
+         VARIABLES MODIFIABLES
+         ------------------------------------------------------------------ */
+      const DEFAULT_LANG = 'fr';                      // langue au premier chargement
+      const STORAGE_KEY  = 'portfolio-lang';          // mémorisation du choix du visiteur
+      const CV_FILES = {                              // fichier CV (PDF) selon la langue
+        fr: 'CV_Youness_Aabil_Ingenieur_v3.pdf',
+        en: 'CV_Youness_Aabil_Engineer_EN.pdf'
+      };
+      const TOGGLE_LABELS = {                         // libellé accessible du bouton
+        fr: 'Switch to English',
+        en: 'Passer en français'
+      };
+      /* ------------------------------------------------------------------ */
+
+      const toggleBtn = document.getElementById('lang-toggle');
+      const navToggle = document.getElementById('nav-toggle');
+      const cvLink    = document.getElementById('cv-download');
+
+      // Mémorise le texte/attributs français d'origine (une seule fois)
+      document.querySelectorAll('[data-en]').forEach(function (el) {
+        el.dataset.fr = el.textContent.trim();
+      });
+      document.querySelectorAll('[data-en-alt]').forEach(function (el) {
+        el.dataset.frAlt = el.getAttribute('alt');
+      });
+      document.querySelectorAll('[data-en-title]').forEach(function (el) {
+        el.dataset.frTitle = el.getAttribute('title');
+      });
+      document.querySelectorAll('[data-en-content]').forEach(function (el) {
+        el.dataset.frContent = el.getAttribute('content');
+      });
+
+      function setLanguage(lang) {
+        const isEn = lang === 'en';
+
+        // Textes
+        document.querySelectorAll('[data-en]').forEach(function (el) {
+          el.textContent = isEn ? el.dataset.en : el.dataset.fr;
+        });
+        // Attributs
+        document.querySelectorAll('[data-en-alt]').forEach(function (el) {
+          el.setAttribute('alt', isEn ? el.dataset.enAlt : el.dataset.frAlt);
+        });
+        document.querySelectorAll('[data-en-title]').forEach(function (el) {
+          el.setAttribute('title', isEn ? el.dataset.enTitle : el.dataset.frTitle);
+        });
+        document.querySelectorAll('[data-en-content]').forEach(function (el) {
+          el.setAttribute('content', isEn ? el.dataset.enContent : el.dataset.frContent);
+        });
+
+        // Lien de téléchargement du CV (PDF)
+        if (cvLink) {
+          cvLink.setAttribute('href', CV_FILES[lang]);
+          cvLink.setAttribute('download', CV_FILES[lang]);
+        }
+
+        // Langue du document + état du bouton
+        document.documentElement.lang = lang;
+        toggleBtn.setAttribute('aria-label', TOGGLE_LABELS[lang]);
+        toggleBtn.querySelectorAll('[data-lang-opt]').forEach(function (opt) {
+          opt.classList.toggle('is-active', opt.dataset.langOpt === lang);
+        });
+
+        try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* stockage indisponible */ }
+      }
+
+      // Clic sur le bouton : bascule FR ⇄ EN
+      toggleBtn.addEventListener('click', function () {
+        setLanguage(document.documentElement.lang === 'en' ? 'fr' : 'en');
+      });
+
+      // Ferme le menu mobile après un clic sur un lien
+      document.querySelectorAll('.nav-links a').forEach(function (a) {
+        a.addEventListener('click', function () { navToggle.checked = false; });
+      });
+
+      // Année du copyright
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Langue initiale (choix mémorisé, sinon langue par défaut)
+      let initial = DEFAULT_LANG;
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved === 'fr' || saved === 'en') initial = saved;
+      } catch (e) { /* stockage indisponible */ }
+      setLanguage(initial);
+    })();
+  </script>
+
+</body>
+</html>
